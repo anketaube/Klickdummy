@@ -6,10 +6,11 @@ st.set_page_config(page_title='DNB Katalog Abfrage')
 st.markdown("# DNB Katalog Klickdummy Testergebnisse")
 
 # 0. Wie alt bist Du?
+st.subheader("0. Wie alt bist Du?")
 alter = st.number_input("0. Wie alt bist Du?", min_value=0, max_value=120, key="alter")
 
 # 1. Kennst Du den neuen DNB Katalog?
-st.write("1. Kennst Du den neuen DNB Katalog? (https://katalog.dnb.de/)")
+st.subheader("1. Kennst Du den neuen DNB Katalog? (https://katalog.dnb.de/)")
 dnb_kenntnis = st.slider("Antwort 0 bis 5 (0 = gar nicht, 5 = sehr gut)", 0, 5, 3, key="dnb_kenntnis")
 
 # 2. Du bist zuhause und möchtest das digitale Exemplar aufrufen
@@ -26,6 +27,13 @@ gedanken_physisch_b = st.text_area("b) Beschreibe Deine Gedanken beim Klicken:",
 zufriedenheit_physisch_c = st.radio("c) Bist Du zufrieden mit der Benutzungsführung?", ("Ja", "Nein", "Teils"), key="zufriedenheit_physisch_c")
 aenderung_physisch_d = st.text_area("d) Was würdest Du anders machen/erwarten?", key="aenderung_physisch_d")
 
+# 4. Zusätzliche Fragen zum Online-Exemplar
+st.subheader("4. Zusätzliche Fragen zum Online-Exemplar")
+format_online = st.text_input("Welches Format hat das Online Exemplar?", key="format_online")
+lizenz_online = st.text_input("Welche Lizenz hat das Online Exemplar?", key="lizenz_online")
+nachnutzung_online = st.radio("Kann ich das Online Exemplar beliebig nachnutzen?", ("Ja", "Nein", "Eingeschränkt"), key="nachnutzung_online")
+fehlende_informationen = st.text_area("Welche Informationen zu dem Exemplar fehlen?", key="fehlende_informationen")
+
 if st.button("Absenden"):
     # Daten in ein Dictionary speichern
     data = {
@@ -39,19 +47,23 @@ if st.button("Absenden"):
         "Gedanken Physisch": gedanken_physisch_b,
         "Zufriedenheit Physisch": zufriedenheit_physisch_c,
         "Aenderung Physisch": aenderung_physisch_d,
+        "Format Online": format_online,
+        "Lizenz Online": lizenz_online,
+        "Nachnutzung Online": nachnutzung_online,
+        "Fehlende Informationen": fehlende_informationen,
     }
 
     # Daten in ein DataFrame umwandeln
-    df = pd.DataFrame([data])
+    df = pd.DataFrame([data], index=[0])  # Erstellen Sie ein DataFrame mit einem Index
 
     # In CSV-Datei speichern
     try:
-        existing_data = pd.read_csv("dnb_umfrage.csv")
-        df = pd.concat([existing_data, df], ignore_index=True)
+        existing_data = pd.read_csv("dnb_umfrage.csv", index_col=0)  # Legen Sie die erste Spalte als Index fest
+        df = pd.concat([existing_data, df], ignore_index=False)
     except FileNotFoundError:
         pass  # Wenn die Datei nicht existiert, wird sie neu erstellt
 
-    df.to_csv("dnb_umfrage.csv", index=False, encoding="utf-8")
+    df.to_csv("dnb_umfrage.csv", index=True, encoding="utf-8")  # Index speichern
     st.success("Daten erfolgreich gespeichert!")
 
     st.subheader("Gespeicherte Daten:")
