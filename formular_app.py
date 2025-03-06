@@ -6,21 +6,21 @@ st.set_page_config(page_title='DNB Katalog Abfrage')
 st.markdown("# DNB Katalog Umfrage")
 
 # 0. Wie alt bist Du?
-alter = st.number_input("0. Wie alt bist Du?", min_value=0, max_value=120)
+alter = st.number_input("0. Wie alt bist Du?", min_value=0, max_value=100)
 
 # 1. Kennst Du den neuen DNB Katalog?
 st.write("1. Kennst Du den neuen DNB Katalog? (https://katalog.dnb.de/)")
-dnb_kenntnis = st.slider("Antwort 1 bis 5 (5 = sehr gut)", 1, 5, 3)
+dnb_kenntnis = st.slider("Antwort 0 bis 5 (5 = sehr gut)", 0, 5, 3)
 
 # 2. Du bist zuhause und möchtest das digitale Exemplar aufrufen
-st.subheader("2. Digitales Exemplar zuhause aufrufen")
+st.subheader("2.Aufgabe: Digitales Exemplar von zuhause aufrufen")
 klickpfad_digital = st.text_area("a) Beschreibe Deinen Klickpfad:")
 gedanken_digital = st.text_area("b) Beschreibe Deine Gedanken beim Klicken:")
 zufriedenheit_digital = st.radio("c) Bist Du zufrieden mit der Benutzungsführung?", ("Ja", "Nein", "Teils"))
 aenderung_digital = st.text_area("d) Was würdest Du anders machen/erwarten?")
 
 # 3. Du möchtest das Medium physisch einsehen
-st.subheader("3. Du möchtest das Medium physisch einsehen")
+st.subheader("3. Aufgabe: Du möchtest das Medium physisch einsehen")
 klickpfad_physisch = st.text_area("a) Beschreibe Deinen Klickpfad:")
 gedanken_physisch = st.text_area("b) Beschreibe Deine Gedanken beim Klicken:")
 zufriedenheit_physisch = st.radio("c) Bist Du zufrieden mit der Benutzungsführung?", ("Ja", "Nein", "Teils"))
