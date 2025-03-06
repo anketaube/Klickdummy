@@ -71,7 +71,7 @@ if st.button("Absenden"):
     st.dataframe(df)
 
 # Versteckter Button zum Löschen der Daten
-delete_password = st.text_input("Passwort zum löschen der Daten:", type="password")
+delete_password = st.text_input("Daten löschen:", type="password")
 
 if delete_password == "dnb": # Ändern Sie dies zu einem sicheren Passwort!
     if st.button("Daten löschen"):
