@@ -3,24 +3,24 @@ import pandas as pd
 
 st.set_page_config(page_title='DNB Katalog Abfrage')
 
-st.markdown("# DNB Katalog Umfrage")
+st.markdown("# DNB Katalog Klickdummy Testergebnisse")
 
 # 0. Wie alt bist Du?
 alter = st.number_input("0. Wie alt bist Du?", min_value=0, max_value=120, key="alter")
 
 # 1. Kennst Du den neuen DNB Katalog?
 st.write("1. Kennst Du den neuen DNB Katalog? (https://katalog.dnb.de/)")
-dnb_kenntnis = st.slider("Antwort 1 bis 5 (5 = sehr gut)", 1, 5, 3, key="dnb_kenntnis")
+dnb_kenntnis = st.slider("Antwort 0 bis 5 (0 = gar nicht, 5 = sehr gut)", 0, 5, 3, key="dnb_kenntnis")
 
 # 2. Du bist zuhause und möchtest das digitale Exemplar aufrufen
-st.subheader("2. Digitales Exemplar zuhause aufrufen")
+st.subheader("2. Testaufgabe: Du bist zuhause und möchtest die Online-Ausgabe aufrufen")
 klickpfad_digital_a = st.text_area("a) Beschreibe Deinen Klickpfad:", key="klickpfad_digital_a")
 gedanken_digital_b = st.text_area("b) Beschreibe Deine Gedanken beim Klicken:", key="gedanken_digital_b")
 zufriedenheit_digital_c = st.radio("c) Bist Du zufrieden mit der Benutzungsführung?", ("Ja", "Nein", "Teils"), key="zufriedenheit_digital_c")
 aenderung_digital_d = st.text_area("d) Was würdest Du anders machen/erwarten?", key="aenderung_digital_d")
 
 # 3. Du möchtest das Medium physisch einsehen
-st.subheader("3. Du möchtest das Medium physisch einsehen")
+st.subheader("3. Testaufgabe: Du möchtest das physische Medium einsehen")
 klickpfad_physisch_a = st.text_area("a) Beschreibe Deinen Klickpfad:", key="klickpfad_physisch_a")
 gedanken_physisch_b = st.text_area("b) Beschreibe Deine Gedanken beim Klicken:", key="gedanken_physisch_b")
 zufriedenheit_physisch_c = st.radio("c) Bist Du zufrieden mit der Benutzungsführung?", ("Ja", "Nein", "Teils"), key="zufriedenheit_physisch_c")
