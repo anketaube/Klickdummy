@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os  # Importiere das os-Modul
 
 st.set_page_config(page_title='DNB Katalog Abfrage')
 
@@ -10,7 +11,7 @@ st.subheader("0. Wie alt bist Du?")
 alter = st.number_input("0. Wie alt bist Du?", min_value=0, max_value=120, key="alter")
 
 # 1. Kennst Du den neuen DNB Katalog?
-st.subheader("1. Kennst Du den neuen DNB Katalog? (https://katalog.dnb.de/)")
+st.subheader("1. Kennst Du den neuen DNB Katalog https://katalog.dnb.de/?")
 dnb_kenntnis = st.slider("Antwort 0 bis 5 (0 = gar nicht, 5 = sehr gut)", 0, 5, 3, key="dnb_kenntnis")
 
 # 2. Du bist zuhause und möchtest das digitale Exemplar aufrufen
@@ -54,17 +55,28 @@ if st.button("Absenden"):
     }
 
     # Daten in ein DataFrame umwandeln
-    df = pd.DataFrame([data], index=[0])  # Erstellen Sie ein DataFrame mit einem Index
+    df = pd.DataFrame([data], index=[0])
 
     # In CSV-Datei speichern
     try:
-        existing_data = pd.read_csv("dnb_umfrage.csv", index_col=0)  # Legen Sie die erste Spalte als Index fest
+        existing_data = pd.read_csv("dnb_umfrage.csv", index_col=0)
         df = pd.concat([existing_data, df], ignore_index=False)
     except FileNotFoundError:
-        pass  # Wenn die Datei nicht existiert, wird sie neu erstellt
+        pass
 
-    df.to_csv("dnb_umfrage.csv", index=True, encoding="utf-8")  # Index speichern
+    df.to_csv("dnb_umfrage.csv", index=True, encoding="utf-8")
     st.success("Daten erfolgreich gespeichert!")
 
     st.subheader("Gespeicherte Daten:")
-    st.dataframe(df)  # Zeigt das DataFrame in Streamlit an
+    st.dataframe(df)
+
+# Versteckter Button zum Löschen der Daten
+delete_password = st.text_input("Passwort zum löschen der Daten:", type="password")
+
+if delete_password == "dnb": # Ändern Sie dies zu einem sicheren Passwort!
+    if st.button("Daten löschen"):
+        try:
+            os.remove("dnb_umfrage.csv")
+            st.success("Daten erfolgreich gelöscht!")
+        except FileNotFoundError:
+            st.warning("Keine Daten zum Löschen gefunden.")
